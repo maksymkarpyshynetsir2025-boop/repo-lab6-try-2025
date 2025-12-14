@@ -4,7 +4,7 @@ from csv_handler import CSVFileHandler, FileNotFound, FileCorrupted
 os.makedirs("lab6", exist_ok=True)
 file_path = "lab6/data.csv"
 
-# Створюємо файл, якщо його немає
+# Create the file if it does not exist
 if not os.path.exists(file_path):
     with open(file_path, "w", encoding="utf-8") as f:
         f.write("")
@@ -16,27 +16,27 @@ except FileNotFound as e:
     exit()
 
 while True:
-    print("\nВведи нове ім'я та вік (або введи 'exit', щоб завершити):")
-    name = input("Ім'я: ").strip()
+    print("\nEnter a new name and age (or enter 'exit', to quit):")
+    name = input("Name: ").strip()
     if name.lower() == "exit":
         break
     age = input("Вік: ").strip()
     if age.lower() == "exit":
         break
     if not age.isdigit():
-        print("Вік має бути числом!")
+        print("Age must be a number!")
         continue
 
     try:
         handler.append([[name, age]])
-        print(f"{name} додано успішно!")
+        print(f"{name} Successfully added!")
     except FileCorrupted as e:
         print(e)
 
-# Зчитуємо і показуємо всі дані як таблицю
+# Read and display all data as a table
 try:
     data = handler.read()
-    print("\nФінальна таблиця:")
+    print("\nFinal table:")
     for row in data:
         print(f"{row[0]:<10} | {row[1]}")
 except FileCorrupted as e:
