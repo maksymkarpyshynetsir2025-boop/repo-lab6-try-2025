@@ -38,7 +38,7 @@ class CSVFileHandler:
     def __init__(self, filepath):
         self.filepath = filepath
         if not os.path.exists(filepath):
-            raise FileNotFound(f"Файл '{filepath}' не знайдено")
+            raise FileNotFound(f"File '{filepath}' not found")
 
     @logged(FileCorrupted, mode="file")
     def read(self):
@@ -47,7 +47,7 @@ class CSVFileHandler:
                 lines = f.read().splitlines()
             return [line.split(",") for line in lines if line]
         except Exception:
-            raise FileCorrupted("Не вдалося прочитати файл")
+            raise FileCorrupted("Unable to read the file")
 
     @logged(FileCorrupted, mode="file")
     def write(self, rows):
@@ -57,7 +57,7 @@ class CSVFileHandler:
                 for row in rows:
                     f.write(",".join(map(str, row)) + "\n")
         except Exception:
-            raise FileCorrupted("Не вдалося записати у файл")
+            raise FileCorrupted("Unable to write to file")
 
     @logged(FileCorrupted, mode="file")
     def append(self, rows):
@@ -66,4 +66,4 @@ class CSVFileHandler:
             data.extend(rows)
             self.write(data)
         except Exception:
-            raise FileCorrupted("Не вдалося дописати у файл")
+            raise FileCorrupted("Unable to append to file")
